@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Madison — Volcanologist & Planetary Scientist</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --basalt:    #1a1a1e;
+      --obsidian:  #111114;
+      --lava:      #d9541e;
+      --ember:     #f07f42;
+      --pumice:    #9a9aa6;
+      --ash:       #c8c8d2;
+      --pale:      #ebebf0;
+      --surface:   #23232a;
+      --rule:      #2e2e38;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--basalt);
+      color: var(--ash);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── NAV ─────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.25rem 3rem;
+      background: rgba(26,26,30,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .nav-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      color: var(--lava);
+      text-transform: uppercase;
+    }
+    nav ul {
+      list-style: none;
+      display: flex; gap: 2.5rem;
+    }
+    nav ul a {
+      text-decoration: none;
+      color: var(--pumice);
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      transition: color 0.2s;
+    }
+    nav ul a:hover { color: var(--pale); }
+
+    /* ─── HERO ────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 0 3rem;
+      overflow: hidden;
+    }
+
+    /* Topographic SVG background — the signature element */
+    .topo-canvas {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      opacity: 0.18;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 820px;
+      padding-top: 6rem;
+    }
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      color: var(--lava);
+      text-transform: uppercase;
+      margin-bottom: 1.4rem;
+    }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 600;
+      line-height: 1.05;
+      color: var(--pale);
+      margin-bottom: 0.3rem;
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--ember);
+    }
+    .hero-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      font-style: italic;
+      color: var(--pumice);
+      margin-bottom: 2.2rem;
+      font-weight: 400;
+    }
+    .hero-desc {
+      max-width: 560px;
+      font-size: 0.95rem;
+      color: var(--ash);
+      line-height: 1.8;
+      margin-bottom: 2.8rem;
+    }
+    .hero-links {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.65rem 1.6rem;
+      border-radius: 2px;
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--lava);
+      color: #fff;
+      border: 1px solid var(--lava);
+    }
+    .btn-primary:hover { background: var(--ember); border-color: var(--ember); }
+    .btn-outline {
+      background: transparent;
+      color: var(--ash);
+      border: 1px solid var(--rule);
+    }
+    .btn-outline:hover { border-color: var(--pumice); color: var(--pale); }
+
+    .hero-badges {
+      position: absolute; bottom: 2.5rem; left: 3rem;
+      display: flex; gap: 2rem; z-index: 2;
+    }
+    .badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      color: var(--pumice);
+      text-transform: uppercase;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .badge::before {
+      content: '';
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--lava);
+    }
+
+    /* ─── SECTIONS ────────────────────────────────────────── */
+    section {
+      padding: 6rem 3rem;
+      border-top: 1px solid var(--rule);
+    }
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--lava);
+      text-transform: uppercase;
+      margin-bottom: 3rem;
+    }
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600;
+      color: var(--pale);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ─── RESEARCH ────────────────────────────────────────── */
+    .research-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .research-card {
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      padding: 2rem;
+      border-radius: 3px;
+      transition: border-color 0.2s;
+    }
+    .research-card:hover { border-color: var(--lava); }
+    .card-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--ember);
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+    .research-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--pale);
+      margin-bottom: 0.7rem;
+      line-height: 1.25;
+    }
+    .research-card p {
+      font-size: 0.88rem;
+      color: var(--pumice);
+      line-height: 1.75;
+    }
+
+    /* ─── FIELDWORK ───────────────────────────────────────── */
+    .field-list {
+      display: flex; flex-direction: column; gap: 0;
+      margin-top: 1.5rem;
+    }
+    .field-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: baseline;
+      padding: 1.4rem 0;
+      border-bottom: 1px solid var(--rule);
+      gap: 1rem;
+    }
+    .field-item:first-child { border-top: 1px solid var(--rule); }
+    .field-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--pale);
+    }
+    .field-detail {
+      font-size: 0.82rem;
+      color: var(--pumice);
+      margin-top: 0.2rem;
+    }
+    .field-year {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--lava);
+      white-space: nowrap;
+    }
+
+    /* ─── FIELD PHOTOS ────────────────────────────────────── */
+    .field-item {
+      display: block;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .field-item-header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 1.4rem;
+    }
+    .field-photos {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 0.75rem;
+    }
+    .photo-slot {
+      aspect-ratio: 4/3;
+      background: var(--surface);
+      border: 1.5px dashed var(--rule);
+      border-radius: 2px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .photo-slot img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 2px;
+      display: block;
+    }
+    .photo-slot .slot-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      pointer-events: none;
+    }
+    .photo-slot .slot-icon {
+      font-size: 1.4rem;
+      opacity: 0.25;
+    }
+    .photo-slot .slot-filename {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      color: var(--pumice);
+      opacity: 0.6;
+      text-align: center;
+      padding: 0 0.5rem;
+    }
+    .photo-slot figcaption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(17,17,20,0.82);
+      padding: 0.4rem 0.65rem;
+      font-size: 0.72rem;
+      color: var(--ash);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .photo-slot:hover figcaption { opacity: 1; }
+
+    @media (max-width: 600px) {
+      .field-photos { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ─── ABOUT ───────────────────────────────────────────── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .about-text p {
+      margin-bottom: 1.2rem;
+      font-size: 0.95rem;
+      color: var(--ash);
+      line-height: 1.85;
+    }
+    .about-meta { display: flex; flex-direction: column; gap: 2rem; }
+    .meta-block h4 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      color: var(--lava);
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .meta-block ul { list-style: none; }
+    .meta-block li {
+      font-size: 0.85rem;
+      color: var(--pumice);
+      padding: 0.25rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .meta-block li:last-child { border-bottom: none; }
+
+    /* ─── CONTACT ─────────────────────────────────────────── */
+    .contact-inner {
+      max-width: 560px;
+    }
+    .contact-inner p {
+      font-size: 0.95rem;
+      color: var(--ash);
+      margin-bottom: 2rem;
+      line-height: 1.8;
+    }
+    .contact-links {
+      display: flex; flex-direction: column; gap: 0;
+    }
+    .contact-link {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--rule);
+      text-decoration: none;
+      color: var(--ash);
+      font-size: 0.88rem;
+      transition: color 0.2s;
+    }
+    .contact-link:first-child { border-top: 1px solid var(--rule); }
+    .contact-link:hover { color: var(--ember); }
+    .contact-link span.mono {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      color: var(--lava);
+      text-transform: uppercase;
+      width: 80px;
+      flex-shrink: 0;
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────────── */
+    footer {
+      padding: 2rem 3rem;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer p {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--pumice);
+      text-transform: uppercase;
+    }
+
+    /* ─── HERO BACKGROUND PHOTO ──────────────────────────── */
+    .hero-bg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 60%;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    .hero-bg.loaded { opacity: 1; }
+    .hero-bg-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(17,17,20,0.82) 0%,
+        rgba(17,17,20,0.55) 55%,
+        rgba(17,17,20,0.35) 100%
+      );
+      z-index: 1;
+    }
+
+    /* ─── RESPONSIVE ──────────────────────────────────────── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      nav ul { gap: 1.5rem; }
+      .hero, section { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .hero-badges { left: 1.5rem; gap: 1rem; flex-wrap: wrap; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .topo-line { animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <span class="nav-name">Madison</span>
+    <ul>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#fieldwork">Fieldwork</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <!-- Background volcano photo -->
+    <img class="hero-bg" src="photos/hero-bg.jpg" alt="" aria-hidden="true" onload="this.classList.add('loaded')" onerror="this.style.display='none'" />
+    <div class="hero-bg-overlay"></div>
+
+    <!-- Signature: animated topographic contour lines -->
+    <svg class="topo-canvas" viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" style="z-index:2">
+      <defs>
+        <style>
+          .topo-line {
+            fill: none;
+            stroke: #d9541e;
+            stroke-width: 1;
+            animation: drift 18s ease-in-out infinite alternate;
+          }
+          @keyframes drift {
+            0%   { stroke-dashoffset: 0; }
+            100% { stroke-dashoffset: 400; }
+          }
+        </style>
+      </defs>
+      <!-- Contour lines suggesting a lava shield/dome in cross-section -->
+      <path class="topo-line" stroke-dasharray="8 4" style="animation-delay:0s"   d="M-100,750 Q200,680 400,700 Q600,720 800,660 Q1000,600 1200,640 Q1400,680 1600,620"/>
+      <path class="topo-line" stroke-dasharray="6 5" style="animation-delay:-2s"  d="M-100,680 Q250,600 500,630 Q700,660 900,580 Q1100,510 1350,560 Q1500,590 1600,540"/>
+      <path class="topo-line" stroke-dasharray="9 3" style="animation-delay:-4s"  d="M-100,610 Q300,520 550,555 Q750,590 950,490 Q1150,400 1400,460 Q1520,490 1600,430"/>
+      <path class="topo-line" stroke-dasharray="5 6" style="animation-delay:-6s"  d="M-100,530 Q350,430 600,470 Q820,510 1020,390 Q1230,280 1450,360 Q1550,400 1600,330"/>
+      <path class="topo-line" stroke-dasharray="10 4" style="animation-delay:-8s" d="M-100,440 Q420,330 680,380 Q920,430 1130,290 Q1340,160 1500,260 Q1580,310 1600,230"/>
+      <path class="topo-line" stroke-dasharray="7 5" style="animation-delay:-10s" d="M-100,340 Q480,220 760,280 Q1010,340 1240,180 Q1410,60 1600,140"/>
+      <path class="topo-line" stroke-dasharray="4 7" style="animation-delay:-12s" d="M100,200 Q450,100 750,160 Q1000,220 1250,80 Q1420,-30 1600,50"/>
+    </svg>
+
+    <div class="hero-content">
+      <p class="eyebrow">PhD Candidate · University of Arizona</p>
+      <h1>Basaltic flows,<br /><em>planetary surfaces.</em></h1>
+      <p class="hero-sub">Volcanology · Remote Sensing · Planetary Science</p>
+      <p class="hero-desc">
+        I study how lava moves — and what it leaves behind. Using the 2021–2023 Fagradalsfjall eruptions as a natural laboratory, I investigate emplacement dynamics and surface morphology as keys to reading volcanic histories on Mars and Venus.
+      </p>
+      <div class="hero-links">
+        <a href="#research" class="btn btn-primary">View Research</a>
+        <a href="#contact" class="btn btn-outline">Get in Touch</a>
+      </div>
+    </div>
+
+    <div class="hero-badges">
+      <span class="badge">NSF GRFP Fellow</span>
+      <span class="badge">NASA VERITAS Mission</span>
+      <span class="badge">FAA-Certified Drone Pilot</span>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section id="research">
+    <p class="section-label">Research Focus</p>
+    <h2>Where lava meets<br />landscape — and beyond.</h2>
+    <div class="research-grid">
+      <div class="research-card">
+        <p class="card-tag">Dissertation</p>
+        <h3>Fagradalsfjall Lava Flow Emplacement</h3>
+        <p>Documenting how basaltic flows from Iceland's 2021–2023 eruptions were emplaced and how their surface morphology records thermal and rheological history — a template for interpreting ancient lava fields elsewhere in the solar system.</p>
+      </div>
+      <div class="research-card">
+        <p class="card-tag">Planetary Analogs</p>
+        <h3>Volcanic Surfaces on Mars &amp; Venus</h3>
+        <p>Translating terrestrial lava flow models to planetary contexts. Contributing to the NASA VERITAS Discovery mission, applying high-resolution surface mapping methods to Venusian volcanism.</p>
+      </div>
+      <div class="research-card">
+        <p class="card-tag">Methods</p>
+        <h3>Remote Sensing &amp; Photogrammetry</h3>
+        <p>Integrating drone-based SfM photogrammetry, DEM analysis, and radar datasets (Magellan, VERITAS, FSAR) with field mapping to characterize lava flow morphology at scales from centimeters to kilometers.</p>
+      </div>
+      <div class="research-card">
+        <p class="card-tag">Modeling</p>
+        <h3>Flow Dynamics &amp; Surface Disruption</h3>
+        <p>Developing Python-based models of lava flow surface disruption incorporating slope mechanics, eddy dissipation, and thermal effects (Glaze et al. 2014; Hon et al. 1994) to predict morphologic outcomes from rheological inputs.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FIELDWORK -->
+  <section id="fieldwork">
+    <p class="section-label">Fieldwork</p>
+    <h2>Active volcanoes<br />as field laboratories.</h2>
+    <div class="field-list">
+
+      <!-- ICELAND -->
+      <div class="field-item">
+        <div class="field-item-header">
+          <div>
+            <p class="field-name">Fagradalsfjall, Iceland</p>
+            <p class="field-detail">Primary field site — Reykjanes Peninsula eruptions; lava facies mapping, drone surveys, sample collection</p>
+          </div>
+          <span class="field-year">2021 – 2023</span>
+        </div>
+        <div class="field-photos">
+          <figure class="photo-slot">
+            <img src="photos/iceland-1.jpg" alt="Fagradalsfjall fieldwork" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/iceland-1.jpg</span></div>
+            <figcaption>Lava flow front / active margins</figcaption>
+          </figure>
+          <figure class="photo-slot">
+            <img src="photos/iceland-2.jpg" alt="Fagradalsfjall drone survey" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/iceland-2.jpg</span></div>
+            <figcaption>Drone survey / aerial view</figcaption>
+          </figure>
+          <figure class="photo-slot">
+            <img src="photos/iceland-3.jpg" alt="Fagradalsfjall surface morphology" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/iceland-3.jpg</span></div>
+            <figcaption>Surface morphology / sampling</figcaption>
+          </figure>
+          <figure class="photo-slot">
+            <img src="photos/iceland-4.jpg" alt="Fagradalsfjall eruption" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/iceland-4.jpg</span></div>
+            <figcaption>Eruption / lava activity</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <!-- LA PALMA -->
+      <div class="field-item">
+        <div class="field-item-header">
+          <div>
+            <p class="field-name">La Palma, Canary Islands</p>
+            <p class="field-detail">Tajogaite eruption fieldwork; comparative basaltic flow morphology</p>
+          </div>
+          <span class="field-year">Ongoing</span>
+        </div>
+        <div class="field-photos">
+          <figure class="photo-slot">
+            <img src="photos/lapalma-1.jpg" alt="La Palma lava field" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/lapalma-1.jpg</span></div>
+            <figcaption>Tajogaite lava field</figcaption>
+          </figure>
+          <figure class="photo-slot">
+            <img src="photos/lapalma-2.jpg" alt="La Palma flow channels" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/lapalma-2.jpg</span></div>
+            <figcaption>Flow channel / tube structures</figcaption>
+          </figure>
+          <figure class="photo-slot">
+            <img src="photos/lapalma-3.jpg" alt="La Palma fieldwork" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/lapalma-3.jpg</span></div>
+            <figcaption>Field conditions / fieldwork</figcaption>
+          </figure>
+          <figure class="photo-slot">
+            <img src="photos/lapalma-4.jpg" alt="La Palma landscape" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/lapalma-4.jpg</span></div>
+            <figcaption>Landscape / terrain overview</figcaption>
+          </figure>
+          <figure class="photo-slot">
+            <img src="photos/lapalma-5.jpg" alt="La Palma sampling" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/lapalma-5.jpg</span></div>
+            <figcaption>Sampling / close-up textures</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <!-- ITALY -->
+      <div class="field-item">
+        <div class="field-item-header">
+          <div>
+            <p class="field-name">Italy</p>
+            <p class="field-detail">Etna and related volcanic systems; active lava field observation</p>
+          </div>
+          <span class="field-year">Ongoing</span>
+        </div>
+        <div class="field-photos">
+          <figure class="photo-slot">
+            <img src="photos/italy-1.jpg" alt="Etna summit" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/italy-1.jpg</span></div>
+            <figcaption>Etna summit / eruption</figcaption>
+          </figure>
+          <figure class="photo-slot">
+            <img src="photos/italy-2.jpg" alt="Italy lava surface textures" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/italy-2.jpg</span></div>
+            <figcaption>Lava surface textures</figcaption>
+          </figure>
+          <figure class="photo-slot">
+            <img src="photos/italy-3.jpg" alt="Italy field team" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/italy-3.jpg</span></div>
+            <figcaption>Field team / site overview</figcaption>
+          </figure>
+          <figure class="photo-slot">
+            <img src="photos/italy-4.jpg" alt="Italy lava flow" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/italy-4.jpg</span></div>
+            <figcaption>Lava flow / active margins</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <!-- WASHINGTON -->
+      <div class="field-item">
+        <div class="field-item-header">
+          <div>
+            <p class="field-name">Channeled Scablands, Washington</p>
+            <p class="field-detail">UAV-based ground-penetrating radar (GPR) surveys; subsurface structure of catastrophic flood-carved terrain</p>
+          </div>
+          <span class="field-year">Ongoing</span>
+        </div>
+        <div class="field-photos">
+          <figure class="photo-slot">
+            <img src="photos/scablands-1.jpg" alt="Channeled Scablands terrain" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/scablands-1.jpg</span></div>
+            <figcaption>Scabland terrain / landscape overview</figcaption>
+          </figure>
+          <figure class="photo-slot">
+            <img src="photos/scablands-2.jpg" alt="UAV GPR survey" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/scablands-2.jpg</span></div>
+            <figcaption>UAV GPR survey in flight</figcaption>
+          </figure>
+          <figure class="photo-slot">
+            <img src="photos/scablands-3.jpg" alt="GPR data collection" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/scablands-3.jpg</span></div>
+            <figcaption>GPR data collection / field setup</figcaption>
+          </figure>
+          <figure class="photo-slot">
+            <img src="photos/scablands-4.jpg" alt="Scablands overview" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/scablands-4.jpg</span></div>
+            <figcaption>Aerial / landscape overview</figcaption>
+          </figure>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <section id="about">
+    <p class="section-label">About</p>
+    <div class="about-grid">
+      <div class="about-text">
+        <h2>The science of<br />flowing rock.</h2>
+        <p>
+          I'm a PhD candidate in Geosciences at the University of Arizona, with joint affiliation in Lunar and Planetary Sciences, advised by Dr. Christopher Hamilton. My research sits at the intersection of volcanology, remote sensing, and planetary science — using Earth's most active lava fields to build frameworks for reading volcanic histories across the solar system.
+        </p>
+        <p>
+          As an NSF GRFP Fellow and member of the NASA VERITAS Discovery mission team, I work at the boundary between terrestrial hazard science and planetary exploration. Understanding how lava flows behave and what signatures they leave in a landscape has direct implications both for communities living near volcanoes and for scientists trying to reconstruct the volcanic histories of Mars and Venus.
+        </p>
+        <p>
+          Outside the lab and field, I'm a trail and marathon runner, rock climber, and drone pilot. I find the same quality of attention in all of it — moving carefully through terrain you don't entirely control.
+        </p>
+      </div>
+      <div class="about-meta">
+        <div class="meta-block">
+          <h4>Affiliations</h4>
+          <ul>
+            <li>University of Arizona — Geosciences</li>
+            <li>Lunar &amp; Planetary Laboratory, UA</li>
+            <li>NASA VERITAS Mission Team</li>
+          </ul>
+        </div>
+        <div class="meta-block">
+          <h4>Honors &amp; Fellowships</h4>
+          <ul>
+            <li>NSF Graduate Research Fellowship</li>
+            <li>UA Sky School Fellowship (2026–27)</li>
+            <li>Galileo Circle Scholar</li>
+          </ul>
+        </div>
+        <div class="meta-block">
+          <h4>Tools &amp; Methods</h4>
+          <ul>
+            <li>ArcGIS Pro · QGIS</li>
+            <li>Agisoft Metashape · DJI Terra</li>
+            <li>Python (NumPy, Matplotlib)</li>
+            <li>SAR / Radar Analysis</li>
+            <li>FAA Part 107 UAS Pilot</li>
+          </ul>
+        </div>
+        <div class="meta-block">
+          <h4>Teaching</h4>
+          <ul>
+            <li>Physical Geology (UA, Binghamton)</li>
+            <li>Earth Surface Processes</li>
+            <li>Environmental Geophysics</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label">Contact</p>
+    <div class="contact-inner">
+      <h2>Let's talk<br />volcanoes.</h2>
+      <p>
+        I'm happy to discuss research collaborations, field opportunities, outreach, or planetary science. Graduate students and early-career scientists are especially welcome to reach out.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:" class="contact-link">
+          <span class="mono">Email</span>
+          Department of Geosciences, University of Arizona
+        </a>
+        <a href="https://lpl.arizona.edu" target="_blank" class="contact-link">
+          <span class="mono">Lab</span>
+          Lunar &amp; Planetary Laboratory, UA
+        </a>
+        <a href="https://veritas.jpl.nasa.gov" target="_blank" class="contact-link">
+          <span class="mono">VERITAS</span>
+          NASA Discovery Mission — Venus
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>University of Arizona · Geosciences &amp; Lunar Planetary Sciences</p>
+    <p>Tucson, Arizona</p>
+  </footer>
+
+
+</body>
+</html>
