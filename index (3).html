@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Madison Tuohy | Volcanologist & Planetary Scientist</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --basalt:    #1a1a1e;
+      --obsidian:  #111114;
+      --lava:      #d9541e;
+      --ember:     #f07f42;
+      --pumice:    #9a9aa6;
+      --ash:       #c8c8d2;
+      --pale:      #ebebf0;
+      --surface:   #23232a;
+      --rule:      #2e2e38;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--basalt);
+      color: var(--ash);
+      font-family: 'Times New Roman', Times, serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.25rem 3rem;
+      background: rgba(26,26,30,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .nav-name {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.12em;
+      color: var(--lava);
+      text-transform: uppercase;
+    }
+    nav ul {
+      list-style: none;
+      display: flex; gap: 2.5rem;
+    }
+    nav ul a {
+      text-decoration: none;
+      color: var(--pumice);
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    nav ul a:hover { color: var(--pale); }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      align-items: center;
+      padding: 0 3rem;
+      overflow: hidden;
+      gap: 3rem;
+    }
+    .topo-canvas {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      opacity: 0.18;
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      padding-top: 6rem;
+      padding-bottom: 5rem;
+    }
+    .eyebrow {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      color: var(--lava);
+      text-transform: uppercase;
+      margin-bottom: 1.4rem;
+    }
+    h1 {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 700;
+      line-height: 1.05;
+      color: var(--pale);
+      margin-bottom: 0.3rem;
+    }
+    .hero-sub {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      font-style: normal;
+      color: var(--pumice);
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+    }
+    .hero-desc {
+      font-size: 0.92rem;
+      color: var(--ash);
+      line-height: 1.8;
+      margin-bottom: 1.4rem;
+    }
+    .hero-about {
+      font-size: 0.88rem;
+      color: var(--pumice);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+    .hero-links {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+    }
+    .hero-meta-panel {
+      position: relative; z-index: 2;
+      padding-top: 6rem;
+      padding-bottom: 5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .hero-meta-box {
+      background: rgba(17,17,20,0.72);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--rule);
+      border-radius: 3px;
+      padding: 1.2rem 1.4rem;
+    }
+    .hero-meta-box h4 {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      color: var(--lava);
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .hero-meta-box ul { list-style: none; }
+    .hero-meta-box li {
+      font-size: 0.78rem;
+      color: var(--pumice);
+      padding: 0.2rem 0;
+      border-bottom: 1px solid rgba(46,46,56,0.6);
+    }
+    .hero-meta-box li:last-child { border-bottom: none; }
+    .btn {
+      display: inline-block;
+      padding: 0.65rem 1.6rem;
+      border-radius: 2px;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--lava);
+      color: #fff;
+      border: 1px solid var(--lava);
+    }
+    .btn-primary:hover { background: var(--ember); border-color: var(--ember); }
+    .btn-outline {
+      background: transparent;
+      color: var(--ash);
+      border: 1px solid var(--rule);
+    }
+    .btn-outline:hover { border-color: var(--pumice); color: var(--pale); }
+
+    .hero-badges {
+      position: absolute; bottom: 2.5rem; left: 3rem;
+      display: flex; gap: 2rem; z-index: 2;
+    }
+    .badge {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      color: var(--pumice);
+      text-transform: uppercase;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .badge::before {
+      content: '';
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--lava);
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 6rem 3rem;
+      border-top: 1px solid var(--rule);
+    }
+    .section-label {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      color: var(--lava);
+      text-transform: uppercase;
+      margin-bottom: 3rem;
+    }
+    h2 {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--pale);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    /* RESEARCH */
+    .research-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .research-card {
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      padding: 2rem;
+      border-radius: 3px;
+      transition: border-color 0.2s;
+    }
+    .research-card:hover { border-color: var(--lava); }
+    .card-tag {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: var(--ember);
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+    .research-card h3 {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--pale);
+      margin-bottom: 0.7rem;
+      line-height: 1.25;
+    }
+    .research-card p {
+      font-size: 0.88rem;
+      color: var(--pumice);
+      line-height: 1.75;
+    }
+    .card-pubs {
+      list-style: none;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--rule);
+    }
+    .card-pubs li {
+      font-size: 0.78rem;
+      color: var(--pumice);
+      line-height: 1.6;
+      padding: 0.3rem 0 0.3rem 0.75rem;
+      border-bottom: 1px solid var(--rule);
+      position: relative;
+    }
+    .card-pubs li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.65rem;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--lava);
+    }
+    .card-pubs li:last-child { border-bottom: none; }
+    .card-pubs li em { color: var(--ash); font-style: italic; }
+    .card-photo {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      border-radius: 2px;
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+
+    /* FIELDWORK */
+    .field-list {
+      display: flex; flex-direction: column; gap: 0;
+      margin-top: 1.5rem;
+    }
+    .field-item {
+      display: block;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .field-item:first-child { border-top: 1px solid var(--rule); }
+    .field-item-header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 1.4rem;
+    }
+    .field-name {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--pale);
+    }
+    .field-detail {
+      font-size: 0.95rem;
+      color: var(--pumice);
+      margin-top: 0.2rem;
+    }
+    .field-year {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 1rem;
+      color: var(--lava);
+      white-space: nowrap;
+    }
+
+    /* FIELD PHOTOS */
+    .field-photos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+      gap: 0.75rem;
+      width: 100%;
+    }
+    .photo-slot {
+      aspect-ratio: 4/3;
+      background: var(--surface);
+      border: 1.5px dashed var(--rule);
+      border-radius: 2px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .photo-slot img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 2px;
+      display: block;
+    }
+    .photo-slot .slot-placeholder { display: none; }
+    .photo-slot figcaption { display: none; }
+
+    @media (max-width: 600px) {
+      .field-photos { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .about-text p {
+      margin-bottom: 1.2rem;
+      font-size: 0.95rem;
+      color: var(--ash);
+      line-height: 1.85;
+    }
+    .about-meta { display: flex; flex-direction: column; gap: 2rem; }
+    .meta-block h4 {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      color: var(--lava);
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .meta-block ul { list-style: none; }
+    .meta-block li {
+      font-size: 0.85rem;
+      color: var(--pumice);
+      padding: 0.25rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .meta-block li:last-child { border-bottom: none; }
+
+    /* CONTACT */
+    .contact-inner { max-width: 560px; }
+    .contact-inner p {
+      font-size: 0.95rem;
+      color: var(--ash);
+      margin-bottom: 2rem;
+      line-height: 1.8;
+    }
+    .contact-links { display: flex; flex-direction: column; gap: 0; }
+    .contact-link {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--rule);
+      text-decoration: none;
+      color: var(--ash);
+      font-size: 0.88rem;
+      transition: color 0.2s;
+    }
+    .contact-link:first-child { border-top: 1px solid var(--rule); }
+    .contact-link:hover { color: var(--ember); }
+    .contact-link span.mono {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      color: var(--lava);
+      text-transform: uppercase;
+      width: 80px;
+      flex-shrink: 0;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 2rem 3rem;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer p {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      color: var(--pumice);
+      text-transform: uppercase;
+    }
+
+    /* HERO BACKGROUND PHOTO */
+    .hero-bg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 60%;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    .hero-bg.loaded { opacity: 1; }
+    .hero-bg-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(17,17,20,0.82) 0%,
+        rgba(17,17,20,0.55) 55%,
+        rgba(17,17,20,0.35) 100%
+      );
+      z-index: 1;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      nav ul { gap: 1.5rem; }
+      .hero { grid-template-columns: 1fr; padding: 1.5rem; gap: 2rem; }
+      .hero-meta-panel { padding-top: 0; padding-bottom: 4rem; }
+      section { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .hero-badges { left: 1.5rem; gap: 1rem; flex-wrap: wrap; }
+      .research-grid { grid-template-columns: 1fr; }
+      .research-card { grid-column: span 1 !important; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .topo-line { animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <span class="nav-name">Madison Tuohy</span>
+    <ul>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#fieldwork">Fieldwork</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <img class="hero-bg" src="photos/hero-bg.jpg" alt="" aria-hidden="true" onload="this.classList.add('loaded')" onerror="this.style.display='none'" />
+    <div class="hero-bg-overlay"></div>
+
+    <svg class="topo-canvas" viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" style="z-index:0">
+      <defs>
+        <style>
+          .topo-line {
+            fill: none;
+            stroke: #d9541e;
+            stroke-width: 1;
+            animation: drift 18s ease-in-out infinite alternate;
+          }
+          @keyframes drift {
+            0%   { stroke-dashoffset: 0; }
+            100% { stroke-dashoffset: 400; }
+          }
+        </style>
+      </defs>
+      <path class="topo-line" stroke-dasharray="8 4" style="animation-delay:0s"   d="M-100,750 Q200,680 400,700 Q600,720 800,660 Q1000,600 1200,640 Q1400,680 1600,620"/>
+      <path class="topo-line" stroke-dasharray="6 5" style="animation-delay:-2s"  d="M-100,680 Q250,600 500,630 Q700,660 900,580 Q1100,510 1350,560 Q1500,590 1600,540"/>
+      <path class="topo-line" stroke-dasharray="9 3" style="animation-delay:-4s"  d="M-100,610 Q300,520 550,555 Q750,590 950,490 Q1150,400 1400,460 Q1520,490 1600,430"/>
+      <path class="topo-line" stroke-dasharray="5 6" style="animation-delay:-6s"  d="M-100,530 Q350,430 600,470 Q820,510 1020,390 Q1230,280 1450,360 Q1550,400 1600,330"/>
+      <path class="topo-line" stroke-dasharray="10 4" style="animation-delay:-8s" d="M-100,440 Q420,330 680,380 Q920,430 1130,290 Q1340,160 1500,260 Q1580,310 1600,230"/>
+      <path class="topo-line" stroke-dasharray="7 5" style="animation-delay:-10s" d="M-100,340 Q480,220 760,280 Q1010,340 1240,180 Q1410,60 1600,140"/>
+      <path class="topo-line" stroke-dasharray="4 7" style="animation-delay:-12s" d="M100,200 Q450,100 750,160 Q1000,220 1250,80 Q1420,-30 1600,50"/>
+    </svg>
+
+    <div class="hero-content">
+      <p class="eyebrow">PhD Candidate · University of Arizona</p>
+      <h1>Basaltic flows,<br /><span style="color:var(--ember);">planetary surfaces.</span></h1>
+      <p class="hero-sub">Volcanology · Remote Sensing · Planetary Science</p>
+      <p class="hero-desc">
+        I study how lava moves and what it leaves behind. Using the 2021–2023 Fagradalsfjall eruptions, I investigate emplacement dynamics and surface morphology to understand how lava travels on Earth and shapes volcanic histories on Mars and Venus.
+      </p>
+      <p class="hero-about">
+        I'm a PhD candidate in Geosciences at the University of Arizona, with joint affiliation in Lunar and Planetary Sciences, advised by Dr. Christopher Hamilton. My research combines volcanology, remote sensing, and planetary science, using Earth's most active lava fields to build frameworks for reading volcanic histories across the solar system. As an NSF GRFP Fellow and member of the NASA VERITAS Discovery mission team, I work at the boundary between terrestrial hazard science and planetary exploration. Outside the lab and field, I'm a trail and marathon runner, rock climber, and drone pilot.
+      </p>
+      <div class="hero-links">
+        <a href="#research" class="btn btn-primary">View Research</a>
+        <a href="#contact" class="btn btn-outline">Get in Touch</a>
+      </div>
+    </div>
+
+    <div class="hero-meta-panel">
+      <div class="hero-meta-box">
+        <h4>Affiliations</h4>
+        <ul>
+          <li>University of Arizona, Dept. of Geosciences</li>
+          <li>University of Arizona, Lunar and Planetary Laboratory (LPL)</li>
+          <li>NASA VERITAS Mission Team</li>
+        </ul>
+      </div>
+      <div class="hero-meta-box">
+        <h4>Honors &amp; Fellowships</h4>
+        <ul>
+          <li>Galileo Circle Scholarship · Fall 2026–Spring 2027</li>
+          <li>P.E.O. International Scholar · Fall 2026–Spring 2028</li>
+          <li>Spencer R. Titley Graduate Scholarship · Spring 2026, Spring 2025</li>
+          <li>Arizona Astrobiology Center Seed Grant · Spring 2026</li>
+          <li>GPSC Travel Grant · Spring 2026</li>
+          <li>Montgomery Associates Best Overall Talk · Spring 2025</li>
+          <li>Bert S. Butler Scholarship · Spring 2025</li>
+          <li>John and Nancy Sumner Scholarship · Spring 2025</li>
+          <li>NSF Graduate Research Fellowship · Fall 2023–Spring 2028</li>
+          <li>Glenn G. Bartle Award in Geology · Spring 2023</li>
+        </ul>
+      </div>
+      <div class="hero-meta-box">
+        <h4>Tools &amp; Methods</h4>
+        <ul>
+          <li>GIS · ArcPro, QGIS</li>
+          <li>SfM · DJI Terra, Agisoft Metashape</li>
+          <li>Programming · Python (NumPy, Matplotlib)</li>
+          <li>UAS · Photogrammetry, LiDAR, Thermal, GPR, HSI</li>
+          <li>Near-surface Geophysics · Magnetometry, LiDAR, GPR, HSI</li>
+        </ul>
+      </div>
+      <div class="hero-meta-box">
+        <h4>Teaching</h4>
+        <ul>
+          <li>Physical Geology (UA)</li>
+          <li>Environmental Visualization (Binghamton University)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="hero-badges">
+      <span class="badge">NSF GRFP Fellow</span>
+      <span class="badge">NASA VERITAS Mission</span>
+      <span class="badge">FAA-Certified Drone Pilot</span>
+    </div>
+  </section>
+
+  <!-- TOPO DIVIDER -->
+  <div style="position:relative; height:120px; background:var(--basalt); overflow:hidden;">
+    <svg viewBox="0 0 1400 120" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.35;">
+      <defs><style>.topo2{fill:none;stroke:#d9541e;stroke-width:1;stroke-dasharray:8 4;animation:drift 18s ease-in-out infinite alternate;}@keyframes drift{0%{stroke-dashoffset:0;}100%{stroke-dashoffset:400;}}</style></defs>
+      <path class="topo2" style="animation-delay:0s"  d="M-100,90 Q300,60 600,75 Q900,90 1200,55 Q1400,35 1600,50"/>
+      <path class="topo2" style="animation-delay:-3s" d="M-100,70 Q250,40 550,58 Q850,75 1150,35 Q1380,15 1600,30"/>
+      <path class="topo2" style="animation-delay:-6s" d="M-100,50 Q350,20 650,38 Q950,55 1250,18 Q1420,2 1600,12"/>
+      <path class="topo2" style="animation-delay:-9s" d="M-100,30 Q400,5 700,20 Q1000,35 1300,5 Q1450,-8 1600,0"/>
+    </svg>
+  </div>
+
+  <!-- RESEARCH -->
+  <section id="research">
+    <p class="section-label">Research Focus</p>
+    <h2>From emplacement<br />to surface record.</h2>
+    <div class="research-grid">
+
+      <div class="research-card" style="grid-column: span 3;">
+        <img class="card-photo" src="photos/research-dissertation.jpg" alt="Fagradalsfjall fieldwork" onerror="this.style.display='none'" />
+        <p class="card-tag">Dissertation</p>
+        <h3>Fagradalsfjall Lava Flow Emplacement</h3>
+        <p>Documenting how basaltic flows from Iceland's 2021–2023 eruptions were emplaced and how their surface morphology records thermal and rheological history, providing a framework for interpreting ancient lava fields elsewhere in the solar system.</p>
+        <ul class="card-pubs">
+          <li>Tuohy M. et al., "The Impact of Dynamic Topography on Lava Facies: A Time-Series Analysis of Fill-and-Spill Processes at Fagradalsfjall," GeoDaze Symposium, Tucson, AZ, Mar 2025</li>
+          <li>Tuohy M. et al., "A geomorphological analysis of the 2021–2023 Fagradalsfjall eruption series," IAVCEI Scientific Assembly, Geneva, Jul 2025</li>
+        </ul>
+      </div>
+
+      <div class="research-card" style="grid-column: span 3;">
+        <img class="card-photo" src="photos/research-planetary.jpg" alt="Volcanic surfaces" onerror="this.style.display='none'" />
+        <p class="card-tag">Planetary Analogs</p>
+        <h3>Volcanic Surfaces on Mars &amp; Venus</h3>
+        <p>Translating terrestrial lava flow models to planetary contexts. Contributing to the NASA VERITAS Discovery mission, applying high-resolution surface mapping methods to Venusian volcanism.</p>
+        <ul class="card-pubs">
+          <li>Whitten J.L. et al., "Simulating volcanic flow mapping using the VERITAS Iceland 2023 field campaign synthetic aperture radar data," LPSC 56, The Woodlands, TX, Mar 2026</li>
+        </ul>
+      </div>
+
+      <div class="research-card" style="grid-column: span 2;">
+        <img class="card-photo" src="photos/research-modeling.jpg" alt="Flow modeling" onerror="this.style.display='none'" />
+        <p class="card-tag">Modeling</p>
+        <h3>Flow Dynamics &amp; Surface Disruption</h3>
+        <p>Developing Python-based models of lava flow surface disruption incorporating slope mechanics, eddy dissipation, and thermal effects to predict morphologic outcomes from rheological inputs.</p>
+      </div>
+
+      <div class="research-card" style="grid-column: span 4;">
+        <img class="card-photo" src="photos/research-uav.jpg" alt="UAV survey" onerror="this.style.display='none'" />
+        <p class="card-tag">UAV Systems &amp; Near-Surface Geophysics</p>
+        <h3>Remote Sensing, Geophysics &amp; Instrumentation</h3>
+        <p>Integrating drone-based SfM photogrammetry, DEM analysis, radar datasets, hyperspectral imaging, and UAV-GPR for lava flow characterization, subsurface investigation, and explosive ordnance detection.</p>
+        <ul class="card-pubs">
+          <li>Carr B., Hamilton C.W., Hadland N., Tuohy M., "Hekla (Iceland) Pumice Quarry UAS Surveys," <em>UA ReDATA</em>, 2026. doi:10.25422/azu.data.28915124</li>
+          <li>Daniel M. et al., "Studying megaflood deposits as Martian analogs using multisystem radar," AGU Fall Meeting, New Orleans, Dec 2025</li>
+          <li>Tuohy M. et al., "Inspiring the Next Generation of Humanitarian Mine Action Researchers," <em>Journal of Conventional Weapons Destruction</em>, 27(1), 2023. doi:10.commons.lib.jmu.edu/cisr-journal/vol27/iss1/7</li>
+          <li>Tuohy M. et al., "Utilizing UAV-based hyperspectral imaging to detect surficial explosive ordnance," <em>The Leading Edge</em>, 42(2): 98–102, 2023. doi:10.1190/tle42020098.1</li>
+          <li>Tuohy M., "Hyperspectral Imaging PFM-1 Landmine," <em>Binghamton University Faculty Scholarship</em>, 31, 2022</li>
+          <li>Tuohy M., "Spectral Profiles of TM62 and VPMA-3 ERW," <em>Binghamton University Faculty Scholarship</em>, 34, 2022</li>
+          <li>Tuohy M., "PG-7 RPG in Three Environments," <em>Binghamton University Faculty Scholarship</em>, 33, 2022</li>
+          <li>Tuohy M., "PFM-1 Antipersonnel Landmines from Three Optical Sensors and a Derivative Data Product," <em>Binghamton University Faculty Scholarship</em>, 32, 2022</li>
+          <li>Restrepo A. et al., "Drones Paired with Hyperspectral Imaging and LiDAR to Locate Explosive Ordnance," EGU General Assembly, Vienna, Apr 2023. doi:10.5194/egusphere-egu23-4516</li>
+          <li>Tuohy M. &amp; Pirro J., "Hyperspectral Imaging to Detect Unexploded Ordnance," AGU Fall Meeting, Chicago, Dec 2022</li>
+          <li>Pirro J. et al., "Utilizing Hyperspectral Remote Sensing to Detect Concentrations of Cyanobacteria in Freshwater Ecosystems," EGU General Assembly, Vienna, May 2022. doi:10.5194/egusphere-egu22-629</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FIELDWORK -->
+  <section id="fieldwork">
+    <p class="section-label">Fieldwork</p>
+    <h2>Active volcanoes<br />as field laboratories.</h2>
+    <div class="field-list">
+
+      <!-- ICELAND -->
+      <div class="field-item">
+        <div class="field-item-header">
+          <div>
+            <p class="field-name">Fagradalsfjall, Iceland</p>
+            <p class="field-detail">Primary field site, Reykjanes Peninsula eruptions; lava facies mapping, drone surveys, sample collection</p>
+          </div>
+          <span class="field-year">2021–2023</span>
+        </div>
+        <div class="field-photos">
+          <figure class="photo-slot">
+            <img src="photos/iceland-1.jpg" alt="Fagradalsfjall fieldwork" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/iceland-1.jpg</span></div>
+            <figcaption>Lava flow front / active margins</figcaption>
+          </figure>
+          <figure class="photo-slot">
+            <img src="photos/iceland-2.jpg" alt="Fagradalsfjall drone survey" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/iceland-2.jpg</span></div>
+            <figcaption>Drone survey / aerial view</figcaption>
+          </figure>
+          <figure class="photo-slot">
+            <img src="photos/iceland-3.jpg" alt="Fagradalsfjall surface morphology" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/iceland-3.jpg</span></div>
+            <figcaption>Surface morphology / sampling</figcaption>
+          </figure>
+          <figure class="photo-slot">
+            <img src="photos/iceland-4.jpg" alt="Fagradalsfjall eruption" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/iceland-4.jpg</span></div>
+            <figcaption>Eruption / lava activity</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <!-- LA PALMA -->
+      <div class="field-item">
+        <div class="field-item-header">
+          <div>
+            <p class="field-name">La Palma, Canary Islands</p>
+            <p class="field-detail">Tajogaite eruption fieldwork; comparative basaltic flow morphology</p>
+          </div>
+          <span class="field-year">Ongoing</span>
+        </div>
+        <div class="field-photos">
+          <figure class="photo-slot">
+            <img src="photos/lapalma-1.jpg" alt="La Palma lava field" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/lapalma-1.jpg</span></div>
+            <figcaption>Tajogaite lava field</figcaption>
+          </figure>
+          <figure class="photo-slot">
+            <img src="photos/lapalma-2.jpg" alt="La Palma flow channels" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/lapalma-2.jpg</span></div>
+            <figcaption>Flow channel / tube structures</figcaption>
+          </figure>
+          <figure class="photo-slot">
+            <img src="photos/lapalma-3.jpg" alt="La Palma fieldwork" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/lapalma-3.jpg</span></div>
+            <figcaption>Field conditions / fieldwork</figcaption>
+          </figure>
+          <figure class="photo-slot">
+            <img src="photos/lapalma-4.jpg" alt="La Palma landscape" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/lapalma-4.jpg</span></div>
+            <figcaption>Landscape / terrain overview</figcaption>
+          </figure>
+          <figure class="photo-slot">
+            <img src="photos/lapalma-5.jpg" alt="La Palma sampling" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/lapalma-5.jpg</span></div>
+            <figcaption>Sampling / close-up textures</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <!-- ITALY -->
+      <div class="field-item">
+        <div class="field-item-header">
+          <div>
+            <p class="field-name">Italy</p>
+            <p class="field-detail">Etna and related volcanic systems; active lava field observation</p>
+          </div>
+          <span class="field-year">Ongoing</span>
+        </div>
+        <div class="field-photos">
+          <figure class="photo-slot">
+            <img src="photos/italy-1.jpg" alt="Etna summit" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/italy-1.jpg</span></div>
+            <figcaption>Etna summit / eruption</figcaption>
+          </figure>
+          <figure class="photo-slot">
+            <img src="photos/italy-2.jpg" alt="Italy lava surface textures" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/italy-2.jpg</span></div>
+            <figcaption>Lava surface textures</figcaption>
+          </figure>
+          <figure class="photo-slot">
+            <img src="photos/italy-3.jpg" alt="Italy field team" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/italy-3.jpg</span></div>
+            <figcaption>Field team / site overview</figcaption>
+          </figure>
+          <figure class="photo-slot">
+            <img src="photos/italy-4.jpg" alt="Italy lava flow" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/italy-4.jpg</span></div>
+            <figcaption>Lava flow / active margins</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <!-- WASHINGTON -->
+      <div class="field-item">
+        <div class="field-item-header">
+          <div>
+            <p class="field-name">Channeled Scablands, Washington</p>
+            <p class="field-detail">UAV-based ground-penetrating radar (GPR) surveys; subsurface structure of catastrophic flood-carved terrain</p>
+          </div>
+          <span class="field-year">Ongoing</span>
+        </div>
+        <div class="field-photos">
+          <figure class="photo-slot">
+            <img src="photos/scablands-1.jpg" alt="Channeled Scablands terrain" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/scablands-1.jpg</span></div>
+            <figcaption>Scabland terrain / landscape overview</figcaption>
+          </figure>
+          <figure class="photo-slot">
+            <img src="photos/scablands-2.jpg" alt="UAV GPR survey" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/scablands-2.jpg</span></div>
+            <figcaption>UAV GPR survey in flight</figcaption>
+          </figure>
+          <figure class="photo-slot">
+            <img src="photos/scablands-3.jpg" alt="GPR data collection" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/scablands-3.jpg</span></div>
+            <figcaption>GPR data collection / field setup</figcaption>
+          </figure>
+          <figure class="photo-slot">
+            <img src="photos/scablands-4.jpg" alt="Scablands overview" onerror="this.style.display='none'" />
+            <div class="slot-placeholder"><span class="slot-icon">📷</span><span class="slot-filename">photos/scablands-4.jpg</span></div>
+            <figcaption>Aerial / landscape overview</figcaption>
+          </figure>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label">Contact</p>
+    <div class="contact-inner">
+      <h2>Let's talk<br />volcanoes.</h2>
+      <p>
+        I'm happy to discuss research collaborations, field opportunities, outreach, or planetary science.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:mtuohy@arizona.edu" class="contact-link">
+          <span class="mono">Email</span>
+          mtuohy@arizona.edu
+        </a>
+        <a href="https://lpl.arizona.edu" target="_blank" class="contact-link">
+          <span class="mono">Lab</span>
+          Lunar &amp; Planetary Laboratory, UA
+        </a>
+        <a href="https://veritas.jpl.nasa.gov" target="_blank" class="contact-link">
+          <span class="mono">VERITAS</span>
+          NASA Discovery Mission, Venus
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>University of Arizona · Geosciences &amp; Lunar &amp; Planetary Sciences</p>
+    <p>Tucson, Arizona</p>
+  </footer>
+
+</body>
+</html>
