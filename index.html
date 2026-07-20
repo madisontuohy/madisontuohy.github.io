@@ -222,6 +222,33 @@
       color: var(--pumice);
       line-height: 1.75;
     }
+    .card-pubs {
+      list-style: none;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--rule);
+    }
+    .card-pubs li {
+      font-size: 0.78rem;
+      color: var(--pumice);
+      line-height: 1.6;
+      padding: 0.3rem 0;
+      border-bottom: 1px solid var(--rule);
+      padding-left: 0.75rem;
+      position: relative;
+    }
+    .card-pubs li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.65rem;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--lava);
+    }
+    .card-pubs li:last-child { border-bottom: none; }
+    .card-pubs li em { color: var(--ash); font-style: italic; }
 
     /* ─── FIELDWORK ───────────────────────────────────────── */
     .field-list {
@@ -527,25 +554,58 @@
     <p class="section-label">Research Focus</p>
     <h2>From emplacement<br />to surface record.</h2>
     <div class="research-grid">
+
       <div class="research-card">
         <p class="card-tag">Dissertation</p>
         <h3>Fagradalsfjall Lava Flow Emplacement</h3>
         <p>Documenting how basaltic flows from Iceland's 2021–2023 eruptions were emplaced and how their surface morphology records thermal and rheological history, providing a framework for interpreting ancient lava fields elsewhere in the solar system.</p>
+        <ul class="card-pubs">
+          <li>Tuohy et al., GeoDaze Symposium, Tucson, AZ — Mar 2025</li>
+          <li>Tuohy et al., IAVCEI Scientific Assembly, Geneva — Jul 2025</li>
+        </ul>
       </div>
+
       <div class="research-card">
         <p class="card-tag">Planetary Analogs</p>
         <h3>Volcanic Surfaces on Mars &amp; Venus</h3>
         <p>Translating terrestrial lava flow models to planetary contexts. Contributing to the NASA VERITAS Discovery mission, applying high-resolution surface mapping methods to Venusian volcanism.</p>
+        <ul class="card-pubs">
+          <li>Whitten et al., LPSC, The Woodlands, TX — Mar 2026</li>
+        </ul>
       </div>
+
       <div class="research-card">
         <p class="card-tag">Methods</p>
         <h3>Remote Sensing &amp; Photogrammetry</h3>
         <p>Integrating drone-based SfM photogrammetry, DEM analysis, and radar datasets (Magellan, VERITAS, FSAR) with field mapping to characterize lava flow morphology at scales from centimeters to kilometers.</p>
+        <ul class="card-pubs">
+          <li>Daniel et al., AGU Fall Meeting, New Orleans — Dec 2025</li>
+        </ul>
       </div>
+
       <div class="research-card">
         <p class="card-tag">Modeling</p>
         <h3>Flow Dynamics &amp; Surface Disruption</h3>
         <p>Developing Python-based models of lava flow surface disruption incorporating slope mechanics, eddy dissipation, and thermal effects to predict morphologic outcomes from rheological inputs.</p>
+      </div>
+
+      <div class="research-card">
+        <p class="card-tag">Near-Surface Geophysics</p>
+        <h3>Unexploded Ordnance &amp; UAV-GPR</h3>
+        <p>Hyperspectral UAV imaging for explosive ordnance detection, and UAV-based ground-penetrating radar surveys of near-surface structure at the Channeled Scablands.</p>
+        <ul class="card-pubs">
+          <li>Tuohy et al., <em>Journal of Conventional Weapons Destruction</em>, 2023</li>
+          <li>Tuohy et al., <em>The Leading Edge</em>, 42(2): 98–102, 2023</li>
+          <li>Tuohy, "Hyperspectral Imaging PFM–1 Landmine," data pub., 2022</li>
+          <li>Tuohy, "Spectral Profiles of TM62 and VPMA–3 ERW," data pub., 2022</li>
+          <li>Tuohy, "PG–7 RPG in Three Environments," data pub., 2022</li>
+          <li>Tuohy, "PFM–1 Antipersonnel Landmines from Three Optical Sensors," data pub., 2022</li>
+          <li>Restrepo et al., EGU General Assembly, Vienna — Apr 2023</li>
+          <li>Tuohy &amp; Pirro, AGU Fall Meeting, Chicago — Dec 2022</li>
+          <li>Tuohy, GIS Research Poster Competition, Binghamton — Nov 2022</li>
+          <li>Tuohy &amp; Pirro, STRATUS Conference, Virtual — May 2022</li>
+          <li>Pirro et al., EGU General Assembly, Vienna — May 2022</li>
+        </ul>
       </div>
     </div>
   </section>
